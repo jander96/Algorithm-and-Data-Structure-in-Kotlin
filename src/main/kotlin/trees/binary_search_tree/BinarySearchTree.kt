@@ -6,6 +6,8 @@ import trees.binary_treee.BinaryNode
 class BinarySearchTree<T: Comparable<T>>() {
     var root: BinaryNode<T>? = null
 
+
+
     fun insert(value: T){
         root = insert(root, value)
     }
@@ -74,6 +76,16 @@ class BinarySearchTree<T: Comparable<T>>() {
             else -> node.rightChild = remove(node.rightChild, value)
         }
         return node
+    }
+
+    private fun isBST(tree: BinaryNode<T>?, min: T?, max: T?): Boolean{
+        tree ?: return true
+
+        if(min != null && min >= tree.value) return false
+        if(max != null && max < tree.value) return false
+
+        return isBST(tree.leftChild,min,tree.value) &&
+                isBST(tree.rightChild,tree.value, max)
     }
 
     override fun toString(): String  = root.toString()
